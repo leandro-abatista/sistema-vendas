@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/db_vendas?charSet=LATIN1</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">123</property>
+
+		<!-- JDBC connection pool (use the build-in) -->
+		<property name="connection.pool_size">1</property>
+		<!-- SQL dialect -->
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+		<!-- thread is the short name for org.hibernate.context.ThreadLocalSessionContext -->
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<!-- Habilita o aparecimento de todas as saídas para comandos SQL no console; -->
+    	<property name="hibernate.show_sql">true</property>
+    	<!-- Imprime o comando SQL executado de forma legível; -->
+    	<property name="hibernate.format_sql">true</property>
+    	<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- mapping class using annotation -->
+		<mapping class="br.com.sistemavenda.domain.Fornecedor"/>
+	</session-factory>
+
+</hibernate-configuration>	
