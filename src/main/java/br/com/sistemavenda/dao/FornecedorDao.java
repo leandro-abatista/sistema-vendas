@@ -51,4 +51,24 @@ public class FornecedorDao {
 		return fornecedores;
 
 	}
+	
+	public Fornecedor buscarPorId(Long id) {
+		
+		Fornecedor f = null;
+		try {
+
+			Query consulta = session.getNamedQuery("Fornecedor.buscarPorId");
+			consulta.setLong("id", id);
+			f = (Fornecedor) consulta.uniqueResult();
+
+		} catch (RuntimeException e) {
+			throw e;
+		} finally {
+			session.close();
+		}
+		
+		return f;
+	}
+	
+	
 }
