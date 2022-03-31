@@ -26,6 +26,10 @@
 
 		<!-- mapping class using annotation -->
 		<mapping class="br.com.sistemavenda.domain.Fornecedor"/>
+		<mapping class="br.com.sistemavenda.domain.Funcionario"/>
+		<mapping class="br.com.sistemavenda.domain.Produto"/>
+		<mapping class="br.com.sistemavenda.domain.Vendas"/>
+		<mapping class="br.com.sistemavenda.domain.Itens"/>
 	</session-factory>
 
 </hibernate-configuration>	

@@ -20,7 +20,7 @@ public class Funcionario implements Serializable {
 	private Long id;
 	@Column(nullable = false, length = 150)
 	private String nome;
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 20, unique = true)
 	private String cpf;
 	@Column(nullable = false, length = 50)
 	private String senha;
