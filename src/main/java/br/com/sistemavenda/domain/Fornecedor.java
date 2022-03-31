@@ -8,10 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "fornecedor")
+@NamedQueries({
+	@NamedQuery(name = "Fornecedor.listar", query = "SELECT fornecedor from Fornecedor fornecedor"),
+	@NamedQuery(name = "Fornecedor.buscarPorId", query = "SELECT fornecedor from Fornecedor fornecedor WHERE fornecedor.id = :id")})
 public class Fornecedor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -75,5 +80,12 @@ public class Fornecedor implements Serializable {
 		Fornecedor other = (Fornecedor) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Fornecedor [id=" + id + ", razaosocial=" + razaosocial + ", cnpj=" + cnpj + "]";
+	}
+	
+	
 
 }

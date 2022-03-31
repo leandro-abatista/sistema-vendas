@@ -1,5 +1,9 @@
 package br.com.sistemavenda.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -26,6 +30,25 @@ public class FornecedorDao {
 		} finally {
 			session.close();
 		}
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Fornecedor> listar() throws Exception {
+		
+		List<Fornecedor> fornecedores = new ArrayList();
+		try {
+
+			Query consulta = session.getNamedQuery("Fornecedor.listar");
+			fornecedores = consulta.list();
+
+		} catch (RuntimeException e) {
+			throw e;
+		} finally {
+			session.close();
+		}
+		
+		return fornecedores;
 
 	}
 }
