@@ -31,7 +31,7 @@ public class HibernateUtil {
         }
         catch (Throwable ex) {
             // Mensagem de erro de conexão
-            System.err.println("Erro de conexão." + ex);
+            System.err.println("Erro ao tentar conectar com o banco de dados." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

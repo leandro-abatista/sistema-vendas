@@ -22,7 +22,9 @@
     	<property name="hibernate.show_sql">true</property>
     	<!-- Imprime o comando SQL executado de forma legível; -->
     	<property name="hibernate.format_sql">true</property>
-    	<property name="hibernate.hbm2ddl.auto">update</property>
+    	<!-- 
+    	<property name="hibernate.hbm2ddl.auto">update</property> -->
+    	<property name="hibernate.hbm2ddl.auto">validate</property>
 
 		<!-- mapping class using annotation -->
 		<mapping class="br.com.sistemavenda.domain.Fornecedor"/>
