@@ -1,63 +1,77 @@
 package br.com.sistemavenda.teste;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.sistemavenda.dao.FornecedorDAO;
+import br.com.sistemavenda.dao.ProdutoDAO;
 import br.com.sistemavenda.domain.Fornecedor;
+import br.com.sistemavenda.domain.Produto;
 
 public class ProdutoDaoTeste {
+	
+	private ProdutoDAO produtoDAO = new ProdutoDAO();
+	private FornecedorDAO fornecedorDAO = new FornecedorDAO();
 
 	@Test
 	@Ignore
 	public void salvar() throws Exception {
-		Fornecedor f = new Fornecedor();
-		f.setRazaosocial("farinha crock ltda");
-		f.setCnpj("546465564654");
 		
-		FornecedorDAO dao = new FornecedorDAO();
-		dao.salvar(f);
+		//primeiro vou pesquisar o fornecedor
+		Fornecedor fornecedor = fornecedorDAO.buscarPorId(2L);
+		
+		Produto produto = new Produto();
+		produto.setDescricao("box gokei grande".toUpperCase());
+		produto.setPreco(new BigDecimal(155.25));
+		produto.setQuantidade(200);
+		produto.setFornecedor(fornecedor);
+		
+		produtoDAO.salvar(produto);
 	}
 	
 	@Test
 	@Ignore
 	public void listar() throws Exception {
-		FornecedorDAO dao = new FornecedorDAO();
-		List<Fornecedor> fornecedores = dao.listar();
 		
-		for (Fornecedor fornecedor : fornecedores) {
-			System.out.println(fornecedor);
+		List<Produto> produtos = produtoDAO.listar();
+		
+		for (Produto produto : produtos) {
+			System.out.println(produto);
+			System.out.println("------------------------------------------------------------------");
 		}
 	}
 	
 	@Test
 	@Ignore
 	public void buscarPorId() throws Exception {
-		FornecedorDAO dao = new FornecedorDAO();
-		Fornecedor f = dao.buscarPorId(4L);
-		System.out.println(f);
+		
+		Produto produto = produtoDAO.buscarPorId(4L);
+		System.out.println("");
+		System.out.println(produto);
+		System.out.println("-----------------------------------------");
 	}
 	
 	@Test
 	@Ignore
 	public void excluir() throws Exception {
-		FornecedorDAO dao = new FornecedorDAO();
-		Fornecedor f = dao.buscarPorId(4L);
 		
-		if(f != null) {
-			dao.excluir(f);
+		Produto produto = produtoDAO.buscarPorId(5L);
+		
+		if(produto != null) {
+			produtoDAO.excluir(produto);
 		} else {
-			System.out.println("Fornecedor não existe na base de dados.");
+			System.out.println("Produto não existe na base de dados.");
 		}
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void excluirPorId() throws Exception {
-		FornecedorDAO dao = new FornecedorDAO();
-		dao.excluir(4L);
+		
+		produtoDAO.excluirPorId(1L);
 		
 	}
 	
@@ -65,13 +79,16 @@ public class ProdutoDaoTeste {
 	@Ignore
 	public void editar() throws Exception {
 		
-		Fornecedor fornecedor = new Fornecedor();
-		fornecedor.setId(3L);
-		fornecedor.setRazaosocial("Novo teste de editar");
-		fornecedor.setCnpj("123111112311313");
+		Produto produto = new Produto();
+		produto.setId(2L);
+		produto.setDescricao("novo teste de cebola crispy editado".toUpperCase());
+		produto.setPreco(new BigDecimal(121.99));
+		produto.setQuantidade(50);
 		
-		FornecedorDAO dao = new FornecedorDAO();
-		dao.editar(fornecedor);
+		Fornecedor fornecedor = fornecedorDAO.buscarPorId(1L);
+		produto.setFornecedor(fornecedor);
+		
+		produtoDAO.editar(produto);
 		
 	}
 	

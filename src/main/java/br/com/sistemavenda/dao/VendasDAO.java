@@ -6,42 +6,41 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.sistemavenda.domain.Funcionario;
-import br.com.sistemavenda.domain.Produto;
+import br.com.sistemavenda.domain.Fornecedor;
+import br.com.sistemavenda.domain.Vendas;
 import br.com.sistemavenda.util.HibernateUtil;
 
-public class ProdutoDAO {
-	
+public class VendasDAO {
+
 	private Transaction transaction = null; // inicia como nulo
-	
-	public Produto salvar(Produto produto) {
-		
+
+	public void salvar(Vendas vendas) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			
-			transaction = session.beginTransaction(); // abrindo uma transação
-			session.save(produto);
+
+			transaction = session.beginTransaction(); // abrindo a transação
+			session.save(vendas);
 			transaction.commit();
-			
+
 		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-		}  finally {
+		} finally {
 			session.close();
 		}
-		
-		return produto;
+
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<Produto> listar() throws Exception {
+	public List<Vendas> listar() throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Produto> produtos = null;
+		List<Vendas> vendas = null;
+		
 		try {
 
-			Query consulta = session.getNamedQuery("Produto.listar");
-			produtos = consulta.list();
+			Query consulta = session.getNamedQuery("Vendas.listar");
+			vendas = consulta.list();
 
 		} catch (RuntimeException e) {
 			throw e;
@@ -49,18 +48,18 @@ public class ProdutoDAO {
 			session.close();
 		}
 
-		return produtos;
+		return vendas;
 
 	}
 
-	public Produto buscarPorId(Long id) {
+	public Vendas buscarPorId(Long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Produto produto = null;
+		Vendas venda = null;
 		try {
 
-			Query consulta = session.getNamedQuery("Produto.buscarPorId");
+			Query consulta = session.getNamedQuery("Vendas.buscarPorId");
 			consulta.setLong("id", id);
-			produto = (Produto) consulta.uniqueResult();
+			venda = (Vendas) consulta.uniqueResult();
 
 		} catch (RuntimeException e) {
 			throw e;
@@ -68,16 +67,17 @@ public class ProdutoDAO {
 			session.close();
 		}
 
-		return produto;
+		return venda;
 	}
 
-	public void excluir(Produto produto) throws Exception {
+	public void excluir(Vendas vendas) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			transaction = session.beginTransaction(); // abrindo a transação
 
-			session.delete(produto);
+			transaction = session.beginTransaction(); // abrindo a transação
+			session.delete(vendas);
 			transaction.commit(); // confirma a transação
+
 		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -85,15 +85,17 @@ public class ProdutoDAO {
 		} finally {
 			session.close();
 		}
+
 	}
-	
-	public void excluirPorId(Long id) throws Exception {
+
+	public void excluir(Long id) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction(); // abrindo a transação
-			Produto produto = buscarPorId(id);
-			session.delete(produto);
+			Vendas venda = buscarPorId(id);
+			session.delete(venda);
 			transaction.commit(); // confirma a transação
+
 		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
@@ -101,27 +103,25 @@ public class ProdutoDAO {
 		} finally {
 			session.close();
 		}
+
 	}
 
-	public Produto editar(Produto produto) {
-		
+	public void editar(Vendas vendas) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			
-			transaction = session.beginTransaction(); // abrindo uma transação
-			session.update(produto);
+
+			transaction = session.beginTransaction(); // abrindo a transação
+			session.update(vendas);
 			transaction.commit();
-			
+
 		} catch (RuntimeException e) {
 			if (transaction != null) {
 				transaction.rollback();
 			}
-		}  finally {
+		} finally {
 			session.close();
 		}
-		
-		return produto;
-		
+
 	}
 
 }

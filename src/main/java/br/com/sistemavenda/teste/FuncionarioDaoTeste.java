@@ -18,10 +18,10 @@ public class FuncionarioDaoTeste {
 	@Ignore
 	public void salvar() throws Exception {
 		Funcionario funcionario = new Funcionario();
-		funcionario.setNome("mariana alves brito".toUpperCase());
-		funcionario.setCpf("454465446");
-		funcionario.setSenha("1321");
-		funcionario.setFuncao("auxiliar de escritório".toUpperCase());
+		funcionario.setNome("marina clara".toUpperCase());
+		funcionario.setCpf("055.254.222-22");
+		funcionario.setSenha("4564");
+		funcionario.setFuncao("auxiliar de vendas".toUpperCase());
 		
 		dao.salvar(funcionario);
 	}

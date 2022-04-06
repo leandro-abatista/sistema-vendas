@@ -12,10 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "produto")
+@NamedQueries({
+	@NamedQuery(name = "Produto.listar", query = "SELECT produto from Produto produto"),
+	@NamedQuery(name = "Produto.buscarPorId", query = "SELECT produto from Produto produto WHERE produto.id = :id")})
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -105,7 +110,7 @@ public class Produto implements Serializable {
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", descricao=" + descricao + ", preco=" + preco + ", quantidade=" + quantidade
-				+ ", fornecedor=" + fornecedor + "]";
+				+ ", fornecedor=" + fornecedor.getRazaosocial() + "]";
 	}
 	
 	

@@ -14,8 +14,8 @@ public class FornecedorDaoTeste {
 	@Ignore
 	public void salvar() throws Exception {
 		Fornecedor f = new Fornecedor();
-		f.setRazaosocial("farinha crock ltda");
-		f.setCnpj("546465564654");
+		f.setRazaosocial("patlog de alimentos ltda");
+		f.setCnpj("045.123.600/0001-22");
 		
 		FornecedorDAO dao = new FornecedorDAO();
 		dao.salvar(f);
@@ -54,7 +54,7 @@ public class FornecedorDaoTeste {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void excluirPorId() throws Exception {
 		FornecedorDAO dao = new FornecedorDAO();
 		dao.excluir(4L);

@@ -13,12 +13,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "vendas")
+@NamedQueries({
+	@NamedQuery(name = "Vendas.listar", query = "SELECT vendas from Vendas vendas"),
+	@NamedQuery(name = "Vendas.buscarPorId", query = "SELECT vendas from Vendas vendas WHERE vendas.id = :id")})
 public class Vendas implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -94,5 +99,13 @@ public class Vendas implements Serializable {
 		Vendas other = (Vendas) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Vendas [id=" + id + ", horario=" + horario + ", valorTotal=" + valorTotal + ", funcionario="
+				+ funcionario.getNome() + "]";
+	}
+	
+	
 
 }
