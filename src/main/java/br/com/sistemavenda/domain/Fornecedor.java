@@ -40,11 +40,11 @@ public class Fornecedor implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	public Long getCodigo() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setCodigo(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

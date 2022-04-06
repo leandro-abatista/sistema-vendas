@@ -6,19 +6,19 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.sistemavenda.domain.Fornecedor;
+import br.com.sistemavenda.domain.Funcionario;
 import br.com.sistemavenda.util.HibernateUtil;
 
-public class FornecedorDAO {
+public class FuncionarioDAO {
 
 	private Transaction transaction = null; // inicia como nulo
 
-	public void salvar(Fornecedor fornecedor) throws Exception {
+	public void salvar(Funcionario funcionario) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 
 			transaction = session.beginTransaction(); // abrindo a transação
-			session.save(fornecedor);
+			session.save(funcionario);
 			transaction.commit();
 
 		} catch (RuntimeException e) {
@@ -32,14 +32,13 @@ public class FornecedorDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Fornecedor> listar() throws Exception {
+	public List<Funcionario> listar() throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Fornecedor> fornecedores = null;
-		
+		List<Funcionario> funcionarios = null;
 		try {
 
-			Query consulta = session.getNamedQuery("Fornecedor.listar");
-			fornecedores = consulta.list();
+			Query consulta = session.getNamedQuery("Funcionario.listar");
+			funcionarios = consulta.list();
 
 		} catch (RuntimeException e) {
 			throw e;
@@ -47,18 +46,18 @@ public class FornecedorDAO {
 			session.close();
 		}
 
-		return fornecedores;
+		return funcionarios;
 
 	}
 
-	public Fornecedor buscarPorId(Long id) {
+	public Funcionario buscarPorId(Long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Fornecedor f = null;
+		Funcionario funcionario = null;
 		try {
 
-			Query consulta = session.getNamedQuery("Fornecedor.buscarPorId");
+			Query consulta = session.getNamedQuery("Funcionario.buscarPorId");
 			consulta.setLong("id", id);
-			f = (Fornecedor) consulta.uniqueResult();
+			funcionario = (Funcionario) consulta.uniqueResult();
 
 		} catch (RuntimeException e) {
 			throw e;
@@ -66,15 +65,31 @@ public class FornecedorDAO {
 			session.close();
 		}
 
-		return f;
+		return funcionario;
 	}
 
-	public void excluir(Fornecedor fornecedor) throws Exception {
+	public void excluir(Funcionario funcionario) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-
 			transaction = session.beginTransaction(); // abrindo a transação
-			session.delete(fornecedor);
+
+			session.delete(funcionario);
+			transaction.commit(); // confirma a transação
+		} catch (RuntimeException e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
+	}
+
+	public void excluirPorId(Long id) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			transaction = session.beginTransaction(); // abrindo a transação
+			Funcionario funcionario = buscarPorId(id);
+			session.delete(funcionario);
 			transaction.commit(); // confirma a transação
 
 		} catch (RuntimeException e) {
@@ -87,33 +102,18 @@ public class FornecedorDAO {
 
 	}
 
-	public void excluir(Long id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			transaction = session.beginTransaction(); // abrindo a transação
-			Fornecedor fornecedor = buscarPorId(id);
-			session.delete(fornecedor);
-			transaction.commit(); // confirma a transação
-
-		} catch (RuntimeException e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-		} finally {
-			session.close();
-		}
-
-	}
-
-	public void editar(Fornecedor fornecedor) throws Exception {
+	public void editar(Funcionario funcionario) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 
 			transaction = session.beginTransaction(); // abrindo a transação
-			Fornecedor fornEditar = buscarPorId(fornecedor.getId());
-			fornEditar.setRazaosocial(fornecedor.getRazaosocial());
-			fornEditar.setCnpj(fornecedor.getCnpj());
-			session.update(fornEditar);
+			Funcionario funcEditar = buscarPorId(funcionario.getId());
+			funcEditar.setNome(funcionario.getNome());
+			funcEditar.setCpf(funcionario.getCpf());
+			funcEditar.setSenha(funcionario.getSenha());
+			funcEditar.setFuncao(funcionario.getFuncao());
+
+			session.update(funcEditar);
 			transaction.commit();
 
 		} catch (RuntimeException e) {
@@ -125,5 +125,4 @@ public class FornecedorDAO {
 		}
 
 	}
-
 }

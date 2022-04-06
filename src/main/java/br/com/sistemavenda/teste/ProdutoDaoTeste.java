@@ -8,7 +8,7 @@ import org.junit.Test;
 import br.com.sistemavenda.dao.FornecedorDAO;
 import br.com.sistemavenda.domain.Fornecedor;
 
-public class FornecedorDaoTeste {
+public class ProdutoDaoTeste {
 
 	@Test
 	@Ignore

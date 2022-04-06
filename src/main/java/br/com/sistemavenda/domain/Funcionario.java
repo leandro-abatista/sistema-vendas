@@ -8,10 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "funcionario")
+@NamedQueries({
+	@NamedQuery(name = "Funcionario.listar", query = "SELECT funcionario from Funcionario funcionario"),
+	@NamedQuery(name = "Funcionario.buscarPorId", query = "SELECT funcionario from Funcionario funcionario WHERE funcionario.id = :id")})
 public class Funcionario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -94,5 +99,13 @@ public class Funcionario implements Serializable {
 		Funcionario other = (Funcionario) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", senha=" + senha + ", funcao=" + funcao
+				+ "]";
+	}
+	
+	
 
 }
