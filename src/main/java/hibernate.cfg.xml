@@ -31,7 +31,7 @@
 		<mapping class="br.com.sistemavenda.domain.Funcionario"/>
 		<mapping class="br.com.sistemavenda.domain.Produto"/>
 		<mapping class="br.com.sistemavenda.domain.Vendas"/>
-		<mapping class="br.com.sistemavenda.domain.Itens"/>
+		<mapping class="br.com.sistemavenda.domain.Item"/>
 	</session-factory>
 
 </hibernate-configuration>	

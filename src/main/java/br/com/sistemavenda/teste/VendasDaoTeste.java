@@ -74,7 +74,7 @@ public class VendasDaoTeste {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void editar() throws Exception {
 		
 		Vendas vendas = vendasDAO.buscarPorId(2L);

@@ -12,11 +12,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "itens")
-public class Itens implements Serializable {
+@Table(name = "item")
+@NamedQueries({
+	@NamedQuery(name = "Item.listar", query = "SELECT item from Item item"),
+	@NamedQuery(name = "Item.buscarPorId", query = "SELECT item from Item item WHERE item.id = :id")})
+public class Item implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -37,10 +42,10 @@ public class Itens implements Serializable {
 	@JoinColumn(name = "id_vendas", referencedColumnName = "id", nullable = false)
 	private Vendas vendas;
 
-	public Itens() {
+	public Item() {
 	}
 
-	public Itens(Long id, Integer quantidade, BigDecimal valorParcial, Produto produto, Vendas vendas) {
+	public Item(Long id, Integer quantidade, BigDecimal valorParcial, Produto produto, Vendas vendas) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.valorParcial = valorParcial;
@@ -101,8 +106,16 @@ public class Itens implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Itens other = (Itens) obj;
+		Item other = (Item) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", quantidade=" + quantidade + ", valorParcial=" + valorParcial + ", produto="
+				+ produto.getDescricao() + ", vendas=" + vendas.getId() + "]";
+	}
+	
+	
 
 }
