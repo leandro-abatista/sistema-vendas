@@ -51,6 +51,9 @@ public class FornecedorBean {
 			FornecedorDAO fornecedorDAO = new FornecedorDAO();
 			fornecedorDAO.salvar(fornecedor);
 			
+			//limpando e criando um novo objeto
+			fornecedor = new Fornecedor();
+			
 			//fornecedores = fornecedorDAO.listar();
 			
 			JSFUtil.adicionarMensagemSucesso("Registro salvo com sucesso!");

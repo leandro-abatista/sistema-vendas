@@ -10,7 +10,7 @@
 	<!-- esta página já estar herdando todo o layout do template.xhtml -->
 	<ui:define name="conteudo">
 		
-		<h:form>
+		<h:form id="formFornecedor">
 			
 			<p:toolbar>
 				<!-- esquerda -->
@@ -19,7 +19,7 @@
 				</f:facet>
 			</p:toolbar>
 		
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" id="painelGrid">
 				<p:outputLabel value="Código:"/>
 				<p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedor.id}"/>
 			
@@ -30,7 +30,8 @@
 				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"/>
 				
 				<p:button value="Novo"/>
-				<p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}" update=" :msgGlobal" />
+				<p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}" 
+					update=" :msgGlobal :formFornecedor:painelGrid" />
 				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
 			</h:panelGrid>
 		</h:form>
