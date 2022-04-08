@@ -21,16 +21,16 @@
 		
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Código:"/>
-				<p:inputText maxlength="20" size="10"/>
+				<p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedor.id}"/>
 			
 				<p:outputLabel value="Descrição:"/>
-				<p:inputText maxlength="50" size="80"/>
+				<p:inputText maxlength="50" size="80" value="#{MBFornecedores.fornecedor.razaosocial}"/>
 				
 				<p:outputLabel value="CNPJ:"/>
-				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30"/>
+				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"/>
 				
 				<p:button value="Novo"/>
-				<p:button value="Salvar"/>
+				<p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}" update=" :msgGlobal" />
 				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
 			</h:panelGrid>
 		</h:form>
