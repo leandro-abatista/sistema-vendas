@@ -7,15 +7,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
 	<!-- esta página já estar herdando todo o layout do template.xhtml -->
+	
+	<ui:define name="metadata">
+		<!-- -->
+		<f:metadata>
+			<f:event listener="#{MBFornecedores.prepararPesquisa()}" type="preRenderView"/>
+		</f:metadata> 
+	</ui:define>
+	
 	<ui:define name="conteudo">
 		
 		<h:form>
 			
 			<p:toolbar>
-				<!-- esquerda -->
-				<f:facet name="header">
-					Fornecedores
-				</f:facet>
+				<h:outputText value="Fornecedores"/>
 			</p:toolbar>
 		
 			<h:panelGrid columns="6">
@@ -29,21 +34,29 @@
 				<p:button value="Novo" outcome="/pages/fornecedorCadastro.xhtml"/>
 			</h:panelGrid>
 			
-			<p:dataTable emptyMessage="Nenhum registro cadastrado.">
-				<p:column headerText="Código">
+			<p:dataTable emptyMessage="Nenhum registro cadastrado." value="#{MBFornecedores.fornecedores}"
+				filteredValue="#{MBFornecedores.fornecedoresFiltrados}" var="forn" rows="10" paginator="true">
 				
+				<p:column headerText="Código" width="50">
+					<h:outputText value="#{forn.id}"/>
 				</p:column>
 				
-				<p:column headerText="Razão Social">
-				
+				<p:column headerText="Razão Social" filterBy="#{forn.razaoSocial}" sortBy="#{forn.razaosocial}">
+					<h:outputText value="#{forn.razaosocial}"/>
 				</p:column>
 				
-				<p:column headerText="CNPJ">
-				
+				<p:column headerText="CNPJ" filterBy="#{forn.cnpj}" sortBy="#{forn.cnpj}" width="180">
+					<h:outputText value="#{forn.cnpj}"/>
 				</p:column>
 				
-				<p:column headerText="Opções">
-				
+				<p:column headerText="Opções" width="200" >
+					<p:button value="Excluir" icon="ui-icon-trash" outcome="/pages/fornecedorCadastro.xhtml" >
+						<f:param name="idFornecedor" value="#{forn.id}"/>
+					</p:button>
+					
+					<p:button value="Atualizar" icon="ui-icon-pencil">
+						<f:param name="idFornecedor" value="#{forn.id}"/>
+					</p:button>
 				</p:column>
 			</p:dataTable>
 		</h:form>

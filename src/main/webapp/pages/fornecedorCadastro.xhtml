@@ -7,7 +7,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="/templates/template.xhtml">
-	<!-- esta página já estar herdando todo o layout do template.xhtml -->
+
+
+	<ui:define name="metadata">
+		<!-- -->
+		<f:metadata>
+			<f:event listener="#{MBFornecedores.carregarCadastro()}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
 	<ui:define name="conteudo">
 		
 		<h:form id="formFornecedor">
@@ -19,7 +28,7 @@
 				</f:facet>
 			</p:toolbar>
 		
-			<h:panelGrid columns="2" id="painelGrid">
+			<h:panelGrid columns="2" id="painelGridCampos">
 				<p:outputLabel value="Código:"/>
 				<p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedor.id}"/>
 			
@@ -29,9 +38,21 @@
 				<p:outputLabel value="CNPJ:"/>
 				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"/>
 				
-				<p:button value="Novo"/>
+			</h:panelGrid>
+				
+			<h:panelGrid columns="7" id="painelGridBotoes">
+				
+				<p:button value="Novo" actionListener="#{MBFornecedores.novo}" 
+					update=" :formFornecedor:painelGridCampos"/>
+					
 				<p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}" 
-					update=" :msgGlobal :formFornecedor:painelGrid" />
+					update=" :msgGlobal :formFornecedor:painelGridCampos" />
+					
+				<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}" 
+					update=" :msgGlobal" />
+					
+				<p:commandButton value="Atualizar" />
+					
 				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
 			</h:panelGrid>
 		</h:form>
