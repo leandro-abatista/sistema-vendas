@@ -59,5 +59,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/primefaces-6.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jcip-annotations-1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/all-themes-1.0.10.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.servlet-api-4.0.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

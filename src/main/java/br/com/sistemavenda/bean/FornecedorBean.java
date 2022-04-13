@@ -21,9 +21,6 @@ public class FornecedorBean {
 	private List<Fornecedor> fornecedoresFiltrados;
 
 	public Fornecedor getFornecedor() {
-		if (fornecedor == null) {
-			fornecedor = new Fornecedor();
-		}
 		return fornecedor;
 	}
 
@@ -103,10 +100,15 @@ public class FornecedorBean {
 		try {
 
 			String valor = JSFUtil.getParam("idFornecedor");
-			
+			//se o id já existir no banco de dados
 			if (valor != null) {
 				Long id = Long.parseLong(valor);
 				fornecedor = fornecedorDAO.buscarPorId(id);
+			} else {
+				//se for um novo id
+				if (fornecedor == null) {
+					fornecedor = new Fornecedor();
+				}
 			}
 
 		} catch (RuntimeException e) {
@@ -114,7 +116,7 @@ public class FornecedorBean {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void excluir() throws Exception {
 
 		try {
@@ -122,12 +124,11 @@ public class FornecedorBean {
 			fornecedorDAO.excluir(fornecedor);
 			fornecedores = fornecedorDAO.listar();
 			JSFUtil.adicionarMensagemSucesso("Fornecedor excluído com sucesso!");
-			
+
 		} catch (RuntimeException e) {
 			JSFUtil.adicionarMensagemErro("Não é possível excluir fornecedor que tenha um produto associado!");
 			e.printStackTrace();
 		}
 	}
-	
 
 }

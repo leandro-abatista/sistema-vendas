@@ -16,4 +16,15 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+		<listener-class>
+			br.com.sistemavenda.util.ContextListener
+		</listener-class>
+	</listener>
+	
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>dark-hive</param-value><!-- thema do primefaces -->
+	</context-param>
 </web-app>
