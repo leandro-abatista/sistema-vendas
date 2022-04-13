@@ -58,7 +58,7 @@ public class FornecedorBean {
 			// limpando e criando um novo objeto
 			this.novo();
 
-			// fornecedores = fornecedorDAO.listar();
+			fornecedores = fornecedorDAO.listar();
 
 			JSFUtil.adicionarMensagemSucesso("Registro salvo com sucesso!");
 
@@ -128,5 +128,6 @@ public class FornecedorBean {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

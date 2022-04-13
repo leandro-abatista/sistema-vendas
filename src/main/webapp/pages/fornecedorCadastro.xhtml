@@ -13,7 +13,7 @@
 		<!-- -->
 		<f:metadata>
 			<f:event listener="#{MBFornecedores.carregarCadastro()}"
-				type="preRenderView" />
+				type="preRenderView"></f:event>
 		</f:metadata>
 	</ui:define>
 
@@ -51,7 +51,8 @@
 				<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}" 
 					update=" :msgGlobal" />
 					
-				<p:commandButton value="Atualizar" />
+				<p:commandButton value="Atualizar" actionListener="#{MBFornecedores.editar}" 
+					update=" :msgGlobal"/>
 					
 				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
 			</h:panelGrid>
