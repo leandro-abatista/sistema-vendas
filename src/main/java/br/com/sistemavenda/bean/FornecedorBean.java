@@ -19,6 +19,25 @@ public class FornecedorBean {
 	private Fornecedor fornecedor;
 	private List<Fornecedor> fornecedores;
 	private List<Fornecedor> fornecedoresFiltrados;
+	
+	private String acao;
+	private Long id;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getAcao() {
+		return acao;
+	}
+	
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
 
 	public Fornecedor getFornecedor() {
 		return fornecedor;
@@ -88,18 +107,23 @@ public class FornecedorBean {
 			fornecedores = fornecedorDAO.listar();
 
 			JSFUtil.adicionarMensagemSucesso("Registro atualizado com sucesso!");
-
+			
 		} catch (Exception e) {
 			JSFUtil.adicionarMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}
+		
 	}
 
 	public void carregarCadastro() {
 
 		try {
-
+			
+			
+			acao = JSFUtil.getParam("fornAcao");
 			String valor = JSFUtil.getParam("idFornecedor");
+			
+			
 			//se o id já existir no banco de dados
 			if (valor != null) {
 				Long id = Long.parseLong(valor);

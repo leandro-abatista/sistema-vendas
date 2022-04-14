@@ -31,7 +31,10 @@
 				<p:inputMask mask="99.999.999/9999-99" maxlength="25" size="20"/>
 				
 				<p:commandButton value="Buscar" />
-				<p:button value="Novo" outcome="/pages/fornecedorCadastro.xhtml"/>
+				
+				<p:button value="Novo" outcome="/pages/fornecedorCadastro.xhtml">
+					<f:param name="fornAcao" value="Novo"/>
+				</p:button>
 			</h:panelGrid>
 			
 			<p:dataTable emptyMessage="Nenhum registro cadastrado." value="#{MBFornecedores.fornecedores}"
@@ -52,10 +55,12 @@
 				<p:column headerText="Opções" width="200" >
 					<p:button value="Excluir" icon="ui-icon-trash" outcome="/pages/fornecedorCadastro.xhtml" >
 						<f:param name="idFornecedor" value="#{forn.id}"/>
+						<f:param name="fornAcao" value="Excluir"/>
 					</p:button>
 					
 					<p:button value="Atualizar" icon="ui-icon-pencil" outcome="/pages/fornecedorCadastro.xhtml">
 						<f:param name="idFornecedor" value="#{forn.id}"/>
+						<f:param name="fornAcao" value="Atualizar"/>
 					</p:button>
 				</p:column>
 			</p:dataTable>

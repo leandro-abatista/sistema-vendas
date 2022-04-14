@@ -12,8 +12,7 @@
 	<ui:define name="metadata">
 		<!-- -->
 		<f:metadata>
-			<f:event listener="#{MBFornecedores.carregarCadastro()}"
-				type="preRenderView"></f:event>
+			<f:event listener="#{MBFornecedores.carregarCadastro()}" type="preRenderView"/>
 		</f:metadata>
 	</ui:define>
 
@@ -33,26 +32,31 @@
 				<p:inputText maxlength="20" size="10" readonly="true" value="#{MBFornecedores.fornecedor.id}"/>
 			
 				<p:outputLabel value="Descrição:"/>
-				<p:inputText maxlength="50" size="80" value="#{MBFornecedores.fornecedor.razaosocial}"/>
+				<p:inputText maxlength="50" size="80" value="#{MBFornecedores.fornecedor.razaosocial}"
+				readonly="#{MBFornecedores.acao == 'Excluir'}"/>
 				
 				<p:outputLabel value="CNPJ:"/>
-				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"/>
+				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"
+				 readonly="#{MBFornecedores.acao == 'Excluir'}"/>
 				
 			</h:panelGrid>
 				
 			<h:panelGrid columns="7" id="painelGridBotoes">
 				
 				<p:button value="Novo" actionListener="#{MBFornecedores.novo}" 
-					update=" :formFornecedor:painelGridCampos"/>
+					update=" :formFornecedor:painelGridCampos" 
+					rendered="#{MBFornecedores.acao == 'Novo'}"/>
 					
 				<p:commandButton value="Salvar" actionListener="#{MBFornecedores.salvar}" 
 					update=" :msgGlobal :formFornecedor:painelGridCampos" />
 					
 				<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}" 
-					update=" :msgGlobal" />
+					update=" :msgGlobal"
+					rendered="#{MBFornecedores.acao == 'Excluir'}" />
 					
 				<p:commandButton value="Atualizar" actionListener="#{MBFornecedores.editar}" 
-					update=" :msgGlobal"/>
+					update=" :msgGlobal"
+					rendered="#{MBFornecedores.acao == 'Atualizar'}"/>
 					
 				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
 			</h:panelGrid>
