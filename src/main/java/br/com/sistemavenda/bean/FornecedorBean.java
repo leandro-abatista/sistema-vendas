@@ -1,9 +1,7 @@
 package br.com.sistemavenda.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -84,7 +82,7 @@ public class FornecedorBean {
 		}
 	}
 
-	// @PostConstruct
+	//@PostConstruct
 	public void prepararPesquisa() throws Exception {
 
 		try {

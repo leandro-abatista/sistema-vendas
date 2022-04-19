@@ -33,11 +33,17 @@
 			
 				<p:outputLabel value="Descrição:"/>
 				<p:inputText maxlength="50" size="80" value="#{MBFornecedores.fornecedor.razaosocial}"
-				readonly="#{MBFornecedores.acao == 'Excluir'}"/>
+				readonly="#{MBFornecedores.acao == 'Excluir'}">
+					<!-- busca uma validação do bean -->
+					<f:validateBean/>
+				</p:inputText>
 				
 				<p:outputLabel value="CNPJ:"/>
 				<p:inputMask mask="99.999.999/9999-99" maxlength="20" size="30" value="#{MBFornecedores.fornecedor.cnpj}"
-				 readonly="#{MBFornecedores.acao == 'Excluir'}"/>
+				 readonly="#{MBFornecedores.acao == 'Excluir'}">
+				 	<!-- busca uma validação do bean -->
+					<f:validateBean/>
+				 </p:inputMask>
 				
 			</h:panelGrid>
 				
