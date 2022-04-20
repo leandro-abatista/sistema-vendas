@@ -6,6 +6,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+	
+	<ui:define name="metadata">
+		<!-- -->
+		<f:metadata>
+			<f:event listener="#{MBFuncionario.prepararPesquisa}" type="preRenderView"/>
+		</f:metadata> 
+	</ui:define>
+	
 	<!-- esta página já estar herdando todo o layout do template.xhtml -->
 	<ui:define name="conteudo">
 		
@@ -36,25 +44,34 @@
 				<p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml"/>
 			</h:panelGrid>
 			
-			<p:dataTable emptyMessage="Nenhum registro cadastrado.">
-				<p:column headerText="Código">
-				
+			<p:dataTable  emptyMessage="Nenhum registro cadastrado." value="#{MBFuncionario.funcionarios}"
+				filteredValue="#{MBFuncionario.funcionariosFiltrados}" var="fun" rows="10" paginator="true">
+				<p:column headerText="Código" width="50">
+					<h:outputText value="#{fun.id}"/>
 				</p:column>
 				
-				<p:column headerText="Nome">
-				
+				<p:column headerText="Nome" filterBy="#{fun.nome}" sortBy="#{fun.nome}">
+					<h:outputText value="#{fun.nome}"/>
 				</p:column>
 				
-				<p:column headerText="CPF">
-				
+				<p:column headerText="CPF" width="150">
+					<h:outputText value="#{fun.cpf}"/>
 				</p:column>
 				
 				<p:column headerText="Função">
-				
+					<h:outputText value="#{fun.funcao}"/>
 				</p:column>
 				
-				<p:column headerText="Opções">
-				
+				<p:column headerText="Opções" width="200" >
+					<p:button value="Excluir" icon="ui-icon-trash" outcome="/pages/funcionarioCadastro.xhtml" >
+						<f:param name="idFuncionario" value="#{fun.id}"/>
+						<f:param name="funAcao" value="Excluir"/>
+					</p:button>
+					
+					<p:button value="Atualizar" icon="ui-icon-pencil" outcome="/pages/funcionarioCadastro.xhtml">
+						<f:param name="idFuncionario" value="#{fun.id}"/>
+						<f:param name="funAcao" value="Atualizar"/>
+					</p:button>
 				</p:column>
 			</p:dataTable>
 		</h:form>

@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "funcionario")
@@ -23,12 +27,18 @@ public class Funcionario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message = "Preencha o campo nome!")
 	@Column(nullable = false, length = 150)
 	private String nome;
+	//@NotEmpty(message = "Preencha o campo CPF!")
+	@CPF(message = "Preencha o campo CPF!")
 	@Column(nullable = false, length = 20, unique = true)
 	private String cpf;
+	@NotEmpty(message = "Preencha o campo senha!")
+	@Size(min = 5, max = 8, message = "Sua senha deve conter de 5 a 8 caracteres!")
 	@Column(nullable = false, length = 50)
 	private String senha;
+	@NotEmpty(message = "Preencha o campo cargo!")
 	@Column(nullable = false, length = 50)
 	private String funcao;
 

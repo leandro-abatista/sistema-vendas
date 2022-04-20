@@ -7,42 +7,75 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	template="/templates/template.xhtml">
+	
+	<ui:define name="metadata">
+		<!-- -->
+		<f:metadata>
+			<f:event listener="#{MBFuncionario.carregarCadastro()}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+	
 	<!-- esta página já estar herdando todo o layout do template.xhtml -->
 	<ui:define name="conteudo">
-		
-		<h:form>
-			
+	
+		<h:form id="formFuncionario">
 			<p:toolbar>
 				<!-- esquerda -->
 				<f:facet name="left">
-					<h:outputText value="Fornecedores"/>
+					<h:outputText value="Funcionários"/>
 				</f:facet>
 			</p:toolbar>
 		
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" id="painelGridCampos">
 				<p:outputLabel value="Código:"/>
-				<p:inputText maxlength="20" size="10"/>
+				<p:inputText maxlength="20"  size="10" readonly="true" value="#{MBFuncionario.funcionario.id}"/>
 			
 				<p:outputLabel value="Nome:"/>
-				<p:inputText maxlength="50" size="80"/>
+				<p:inputText maxlength="50" size="80" value="#{MBFuncionario.funcionario.nome}"
+				readonly="#{MBFuncionario.acao == 'Excluir'}">
+					<f:validateBean/>
+				</p:inputText>
 				
 				<p:outputLabel value="CPF:"/>
-				<p:inputMask mask="999.999.999-99" maxlength="20" size="30"/>
+				<p:inputMask mask="999.999.999-99" maxlength="20" size="30" value="#{MBFuncionario.funcionario.cpf}"
+				readonly="#{MBFuncionario.acao == 'Excluir'}">
+					<f:validateBean/>
+				</p:inputMask>
 				
 				<p:outputLabel value="Senha:"/>
-				<p:password maxlength="20" size="30"/>
+				<p:password maxlength="20" size="30" value="#{MBFuncionario.funcionario.senha}"
+				readonly="#{MBFuncionario.acao == 'Excluir'}">
+					<f:validateBean/>
+				</p:password>
 				
 				<p:outputLabel value="Função:"/>
-				<p:selectOneMenu>
-					<f:selectItem itemLabel="Selecione uma função"/>
-					<f:selectItem itemLabel="Administrador"/>
-					<f:selectItem itemLabel="Gerente"/>
-					<f:selectItem itemLabel="Balconista"/>
+				<p:selectOneMenu value="#{MBFuncionario.funcionario.funcao}"
+				readonly="#{MBFuncionario.acao == 'Excluir'}" >
+					<f:selectItem itemValue="" itemLabel="Selecione uma função"/>
+					<f:selectItem itemValue="Administrador" itemLabel="Administrador"/>
+					<f:selectItem itemValue="Gerente" itemLabel="Gerente"/>
+					<f:selectItem itemValue="Balconista" itemLabel="Balconista"/>
 				</p:selectOneMenu>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="7" id="painelGridBotoes">
 				
-				<p:button value="Novo"/>
-				<p:button value="Salvar"/>
-				<p:button value="Voltar" outcome="/pages/fornecedorPesquisa.xhtml"/>
+				<p:button value="Novo" actionListener="#{MBFuncionario.novo}" 
+					update=" :formFuncionario:painelGridCampos" 
+					rendered="#{MBFuncionario.acao == 'Novo'}"/>
+					
+				<p:commandButton value="Salvar" actionListener="#{MBFuncionario.salvar}" 
+					update=" :msgGlobal :formFuncionario:painelGridCampos" />
+					
+				<p:commandButton value="Excluir" actionListener="#{MBFuncionario.excluir}" 
+					update=" :msgGlobal"
+					rendered="#{MBFuncionario.acao == 'Excluir'}" />
+					
+				<p:commandButton value="Atualizar" actionListener="#{MBFuncionario.editar}" 
+					update=" :msgGlobal"
+					rendered="#{MBFuncionario.acao == 'Atualizar'}"/>
+					
+				<p:button value="Voltar" outcome="/pages/funcionarioPesquisa.xhtml"/>
 			</h:panelGrid>
 		</h:form>
 		

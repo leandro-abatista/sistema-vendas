@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity
 @Table(name = "fornecedor")
@@ -27,11 +28,11 @@ public class Fornecedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty(message = "Preencha o campo Razão Social")
+	@NotEmpty(message = "Preencha o campo Razão Social!")
 	@Column(name = "razaosocial", nullable = false, length = 150)
 	private String razaosocial;
 
-	@NotEmpty(message = "Preencha o campo CNPJ")
+	@CNPJ(message = "Preencha o campo CNPJ!")
 	@Column(name = "cnpj", nullable = false, length = 25)
 	private String cnpj;
 
