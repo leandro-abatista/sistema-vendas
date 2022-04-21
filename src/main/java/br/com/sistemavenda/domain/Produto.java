@@ -15,6 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "produto")
@@ -27,14 +32,20 @@ public class Produto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message = "Preencha o campo descrição do produto!")
 	@Column(nullable = false, length = 150)
 	private String descricao;
+	@NotNull(message = "Preencha o campo preço!")
+	@DecimalMin(value = "0.00", message = "O valor não pode ser menor que 0.00")
 	@Column(nullable = false, scale = 2, precision = 10)
 	private BigDecimal preco;
+	@NotNull(message = "Preencha o campo quantidade!")
+	@Min(value = 1, message = "A quantidade não pode ser menor que 1!")
 	@Column(nullable = false)
 	private Integer quantidade;
 
 	// chave estrangeira
+	@NotNull(message = "Preencha o campo fornecedor!")
 	@ManyToOne(fetch = FetchType.EAGER) // muitos para um
 	@JoinColumn(name = "id_fornecedor", referencedColumnName = "id", nullable = false)
 	private Fornecedor fornecedor;

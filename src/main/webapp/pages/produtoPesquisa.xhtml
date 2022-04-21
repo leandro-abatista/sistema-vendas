@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+	<!-- esta página já estar herdando todo o layout do template.xhtml -->
+	
+	<ui:define name="metadata">
+		<!-- -->
+		<f:metadata>
+			<f:event listener="#{MBProduto.prepararPesquisa}" type="preRenderView"/>
+		</f:metadata> 
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		
+		<h:form id="formProduto">
+			
+			<p:toolbar>
+				<h:outputText value="Produtos"/>
+			</p:toolbar>
+		
+			<h:panelGrid columns="6">
+				<p:outputLabel value="Descrição:"/>
+				<p:inputText maxlength="50" size="30"/>
+				
+				<p:button value="Novo" outcome="/pages/produtoCadastro.xhtml">
+					<f:param name="prodAcao" value="Novo"/>
+				</p:button>
+			</h:panelGrid>
+			
+			<p:dataTable emptyMessage="Nenhum registro cadastrado." value="#{MBProduto.produtos}"
+				filteredValue="#{MBProduto.produtoFiltrados}" var="prod" rows="10" paginator="true">
+				
+				<p:column headerText="Código" width="50">
+					<h:outputText value="#{prod.id}"/>
+				</p:column>
+				
+				<p:column headerText="Descrição" filterBy="#{prod.descricao}" sortBy="#{prod.descricao}">
+					<h:outputText value="#{prod.descricao}"/>
+				</p:column>
+				
+				<p:column headerText="Preço" width="80">
+					<h:outputText value="#{prod.preco}"/>
+				</p:column>
+				
+				<p:column headerText="Quantidade" width="80">
+					<h:outputText value="#{prod.quantidade}"/>
+				</p:column>
+				
+				<p:column headerText="Fornecedor" width="200">
+					<h:outputText value="#{prod.fornecedor.razaosocial}"/>
+				</p:column>
+				
+				<p:column headerText="Opções" width="200" >
+					<p:button value="Excluir" icon="ui-icon-trash" outcome="/pages/produtoCadastro.xhtml"
+					style="background: red" >
+						<f:param name="idProduto" value="#{prod.id}"/>
+						<f:param name="prodAcao" value="Excluir"/>
+					</p:button>
+					
+					<p:button value="Atualizar" icon="ui-icon-pencil" outcome="/pages/produtoCadastro.xhtml">
+						<f:param name="idProduto" value="#{prod.id}"/>
+						<f:param name="prodAcao" value="Atualizar"/>
+					</p:button>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
