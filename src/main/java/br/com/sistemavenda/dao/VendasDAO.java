@@ -14,12 +14,14 @@ public class VendasDAO {
 
 	private Transaction transaction = null; // inicia como nulo
 
-	public void salvar(Vendas vendas) throws Exception {
+	public Long salvar(Vendas vendas) throws Exception {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
+			
+			Long codigo = null;
 
 			transaction = session.beginTransaction(); // abrindo a transação
-			session.save(vendas);
+			codigo = (Long) session.save(vendas);
 			transaction.commit();
 
 		} catch (RuntimeException e) {
@@ -29,6 +31,8 @@ public class VendasDAO {
 		} finally {
 			session.close();
 		}
+		
+		return codigo;
 
 	}
 

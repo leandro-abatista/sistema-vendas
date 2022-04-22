@@ -50,7 +50,7 @@
 				<p:column headerText="Opções" width="200" >
 					<p:commandButton value="Adicionar" icon="ui-icon-plusthick" 
 					 actionListener="#{MBVenda.adicionar(produto)}"
-					update=":formVenda:tableItens">
+					update=":formVenda:tableItens :formVenda:campoValorTotal">
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -78,15 +78,49 @@
 				
 				<p:column headerText="Opções" width="200" >
 					<p:commandButton value="Remover" icon="ui-icon-minusthick" actionListener="#{MBVenda.remover(item)}"
-					update=":formVenda:tableItens">
+					update=" :formVenda:tableItens :formVenda:campoValorTotal">
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 			
 			<p:separator/>
 			
-			<h:outputText value="Valor Total"/>
+			<h:panelGrid>
+				<h:outputText id="campoValorTotal" value="Valor Total: #{MBVenda.vendasCadastro.valorTotal}"/>
+				<p:commandButton value="Finalizar venda" 
+				actionListener="#{MBVenda.carregarDadosVendas()}"
+				 oncomplete="PF('dlgFinVenda').show()"
+				 update=" :dlgVenda"/>
+			</h:panelGrid>
 		</h:form>
+		
+		<p:dialog closable="true" draggable="true" modal="true" resizable="false" header="Finalizar venda"
+		widgetVar="dlgFinVenda" appendTo="@(body)" id="dlgVenda">
+			<h:form>
+				<h:panelGrid>
+					<h:outputText value="Horário:" />
+					<h:outputText value="#{MBVenda.vendasCadastro.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Santa_Catarina"/>
+					</h:outputText>
+					<p:separator/>
+					<h:outputText value="Funcionário:" />
+					<h:outputText value="#{MBVenda.vendasCadastro.funcionario.nome}" />
+					
+					<p:separator/>
+					<h:outputText value="Valor Total:" />
+					<h:outputText value="#{MBVenda.vendasCadastro.valorTotal}" />
+					
+					<h:panelGrid columns="2">
+						<p:commandButton value="Finalizar venda" actionListener="#{MBVenda.salvarVenda()}"
+						update=" :msgGlobal  :formVenda:tableItens :formVenda:campoValorTotal" 
+						onclick="PF('dlgFinVenda').hide()"
+						style="background: LimeGreen"/>
+						
+						<p:commandButton value="Voltar" onclick="PF('dlgFinVenda').hide()" update=" :dlgVenda"/>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 		
 	</ui:define>
 </ui:composition>

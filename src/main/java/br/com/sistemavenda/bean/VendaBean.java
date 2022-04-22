@@ -2,14 +2,19 @@ package br.com.sistemavenda.bean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.sistemavenda.dao.FuncionarioDAO;
 import br.com.sistemavenda.dao.ProdutoDAO;
+import br.com.sistemavenda.dao.VendasDAO;
+import br.com.sistemavenda.domain.Funcionario;
 import br.com.sistemavenda.domain.Item;
 import br.com.sistemavenda.domain.Produto;
+import br.com.sistemavenda.domain.Vendas;
 import br.com.sistemavenda.util.JSFUtil;
 
 @ManagedBean(name = "MBVenda")
@@ -17,12 +22,27 @@ import br.com.sistemavenda.util.JSFUtil;
 public class VendaBean {
 
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
+	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+	private VendasDAO vendasDAO = new VendasDAO();
+	private Vendas vendasCadastro;
 	private Produto produto;
 	private List<Item> itens;
 	private List<Produto> produtos;
 	private List<Produto> produtoFiltrados;
 
 	private List<Produto> itensFiltrados;
+	
+	public Vendas getVendasCadastro() {
+		if (vendasCadastro == null) {
+			vendasCadastro = new Vendas();
+			vendasCadastro.setValorTotal(new BigDecimal("0.00"));
+		}
+		return vendasCadastro;
+	}
+	
+	public void setVendasCadastro(Vendas vendasCadastro) {
+		this.vendasCadastro = vendasCadastro;
+	}
 
 	public Produto getProduto() {
 		return produto;
@@ -185,6 +205,8 @@ public class VendaBean {
 			item.setValorParcial(produto.getPreco().multiply(new BigDecimal(item.getQuantidade())));
 			itens.set(posicaoEncontrada, item);
 		}
+		
+		vendasCadastro.setValorTotal(vendasCadastro.getValorTotal().add(produto.getPreco()));
 	}
 	
 	public void remover(Item item) {
@@ -203,6 +225,30 @@ public class VendaBean {
 		
 		if (posicaoEncontrada > -1) {
 			itens.remove(posicaoEncontrada);
+			vendasCadastro.setValorTotal(vendasCadastro.getValorTotal().subtract(item.getValorParcial()));
+		}
+	}
+	
+	public void carregarDadosVendas() {
+		vendasCadastro.setHorario(new Date());
+		Funcionario funcionario = funcionarioDAO.buscarPorId(1L);
+		vendasCadastro.setFuncionario(funcionario);
+	}
+	
+	public void salvarVenda() throws Exception {
+		try {
+			
+			vendasDAO.salvar(vendasCadastro);
+			
+			vendasCadastro = new Vendas();
+			vendasCadastro.setValorTotal(new BigDecimal("0.00"));
+			itens = new ArrayList<Item>();
+			
+			JSFUtil.adicionarMensagemSucesso("Venda realizada com sucesso!");
+
+		} catch (RuntimeException e) {
+			JSFUtil.adicionarMensagemErro("Não é possível finalizar a venda!");
+			e.printStackTrace();
 		}
 	}
 
